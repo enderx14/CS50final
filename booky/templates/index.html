@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+    {% block content %}
+    <body>
+
+
+		<!-- Content -->
+		<div class="container">
+        	{% for booking in bookings %}
+			<!-- Post -->
+			<article class="media content-section">
+				<div class="media-body">
+					<div class="article-metadata">
+						<p>{{ booking.bride }}</p>
+						<h2>{{ booking.location }}  {{ booking.schedule }} </h2>
+					</div>
+					<div class="">
+					    <span class="date"><span class="month">{{ booking.month }}</span> <span class="day">{{ booking.day }}</span><span class="year">, {{ booking.year }}</span></span>
+					</div>
+					<p>
+					    <strong>Hello!</strong> You're looking at <strong>Striped</strong>
+					</p>
+					<p>
+						Striped is released for free
+					</p>
+				</div>
+			</article>
+
+            {% endfor %}
+				<!-- Pagination -->
+				<div style="display: none">
+					<!--<a href="#" class="button previous">Previous Page</a>-->
+					<div class="">
+						<a href="#" class="">1</a>
+						<a href="#">2</a>
+						<a href="#">3</a>
+						<a href="#">4</a>
+						<span>…</span>
+						<a href="#">20</a>
+					</div>
+					<a href="#" class="">Next Page</a>
+				</div>
+		</div>
+
+
+{% endblock content %}
+
+
+</body>

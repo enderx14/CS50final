@@ -1,0 +1,111 @@
+{% extends "base.html" %} {% block content %}
+<div>
+  <article class="media content-section">
+    <div class="media-body">
+      <h2 class="article-title">
+        {{ current_user.username}}'s New Business Setup
+      </h2>
+      <p class="article-content">
+        Please enter all your business details needed to setup the BOOKY
+        application for you
+      </p>
+    </div>
+  </article>
+  <div class="content-section">
+    <form id="multiStepForm" method="POST" action="">
+      <fieldset class="form-group active-step" id="step1">
+        <legend class="border-bottom mb-4">Business Setup</legend>
+        <div class="form-group mb-5 w-50">
+          {{ business_form.business_name.label(class="form-control-label") }} {{
+          business_form.business_name(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group w-50">
+          <button type="button" class="save-btn">Save</button>
+        </div>
+      </fieldset>
+      <fieldset class="form-group active-step" id="step2">
+        <legend class="border-bottom mb-4">Artists Setup</legend>
+        <div class="form-group mb-3 w-50">
+          {{ artist_form.artist_name.label(class="form-control-label") }} {{
+          artist_form.artist_name(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group mb-5 w-50">
+          {{ artist_form.artist_number.label(class="form-control-label") }} {{
+          artist_form.artist_number(class="form-control form-control-lg") }}
+
+          <div id="artistEntries">
+            <input type="hidden" id="artistCount" name="artistCount" />
+          </div>
+          <button id="addArtistBtn" type="button" class="btn btn-outline-info">
+            Add Another Artist
+          </button>
+          <button
+            id="removeArtistBtn"
+            type="button"
+            class="btn btn-outline-info"
+          >
+            Remove Artist
+          </button>
+        </div>
+        <div class="form-group w-50">
+          <button type="button" class="save-btn">Save</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group active-step" id="step3">
+        <legend class="border-bottom mb-4 mt-5">Schedules Setup</legend>
+        <div class="form-group mb-5">
+          <div id="scheduleEntries">
+            <input type="hidden" id="scheduleCount" name="scheduleCount" />
+            <!-- Existing schedule entries go here (if any) -->
+          </div>
+          <button
+            id="addScheduleBtn"
+            type="button"
+            class="btn btn-outline-info"
+          >
+            Add Schedule
+          </button>
+          <button
+            id="removeScheduleBtn"
+            type="button"
+            class="btn btn-outline-info"
+          >
+            Remove Schedule
+          </button>
+        </div>
+        <div class="form-group w-50">
+          <button type="button" class="save-btn">Save</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-group active-step" id="step4">
+        <legend class="border-bottom mb-4 mt-5">Packages Setup</legend>
+        <div class="form-group mb-5">
+          <div id="packageEntries">
+            <input type="hidden" id="packageCount" name="packageCount" />
+            <!-- Existing schedule entries go here (if any) -->
+          </div>
+          <button id="addPackageBtn" type="button" class="btn btn-outline-info">
+            Add Package
+          </button>
+          <button
+            id="removePackageBtn"
+            type="button"
+            class="btn btn-outline-info"
+          >
+            Remove Package
+          </button>
+        </div>
+        <div class="form-group w-50">
+          <button type="button" class="save-btn">Save</button>
+        </div>
+      </fieldset>
+    </form>
+    <div class="buttons">
+      <button id="prevBtn" type="button">Previous</button>
+      <button id="nextBtn" type="button">Next</button>
+    </div>
+  </div>
+</div>
+{% endblock content %}
