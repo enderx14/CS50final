@@ -50,7 +50,9 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.first_login:
+        return redirect(url_for("new_business"))
+    elif current_user.is_authenticated:
         return redirect(url_for("home"))
     form = LoginForm()
     if request.method == "POST" and form.validate_on_submit():
@@ -58,6 +60,8 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get("next")
+            if current_user.first_login:
+                return redirect(url_for("new_business"))
             return redirect(next_page) if next_page else redirect(url_for("home"))
         else:
             flash(f"Login UNSUCCESSFUL, Please check email and/or password", "danger")
@@ -107,23 +111,10 @@ def account():
 def new_business():
     business_form = BusinessForm()
     artist_form = ArtistForm()
-    schedules_form = ScheduleForm()
-    packages_form = PackageForm()
+    # schedules_form = ScheduleForm()
+    # packages_form = PackageForm()
     # if current_user.is_authenticated and current_user.first_login:
-    if request.method == 'POST':
-        schedules = []
-        if request.form.get('scheduleCount') != '':
-            schedule_count = int(request.form.get('scheduleCount', 0))
-        else:
-            schedule_count = 0
-        for i in range(1, schedule_count + 1):
-            schedule_key = f'schedule_{i}'
-            schedule_value = request.form.get(schedule_key)
-            schedules.append(schedule_value)
-        print("Submitted Schedules:")
-        for schedule in schedules:
-            print(schedule)
-
+    if request.method == 'POST' and current_user.first_login:
         artists = [{"name": artist_form.artist_name.data, "number": artist_form.artist_number.data}]
         if request.form.get('artistCount', 0) != '':
             artist_count = 1 + int(request.form.get('artistCount', 0))
@@ -140,6 +131,19 @@ def new_business():
         for artist in artists:
             print(artist)
         
+        schedules = []
+        if request.form.get('scheduleCount') != '':
+            schedule_count = int(request.form.get('scheduleCount', 0))
+        else:
+            schedule_count = 0
+        for i in range(1, schedule_count + 1):
+            schedule_key = f'schedule_{i}'
+            schedule_value = request.form.get(schedule_key)
+            schedules.append(schedule_value)
+        print("Submitted Schedules:")
+        for schedule in schedules:
+            print(schedule)
+        
         packages = []
         if request.form.get('packageCount') != '':
             package_count = int(request.form.get('packageCount', 0))
@@ -153,6 +157,35 @@ def new_business():
         print("Submitted Packages:")
         for package in packages:
             print(package)
+
+        event_types = []
+        if request.form.get('eventTypeCount') != '':
+            event_type_count = int(request.form.get('eventTypeCount', 0))
+            print(event_type_count)
+        else:
+            event_type_count = 0
+        for i in range(1, event_type_count + 1):
+            event_type_key = f'event_type_{i}'
+            event_type_value = request.form.get(event_type_key)
+            event_types.append(event_type_value)
+        print("Submitted Event Types:")
+        for event_type in event_types:
+            print(event_type)
+
+        payment_methods = []
+        if request.form.get('paymentMethodCount') != '':
+            payment_method_count = int(request.form.get('paymentMethodCount', 0))
+            print(payment_method_count)
+        else:
+            payment_method_count = 0
+        for i in range(1, payment_method_count + 1):
+            payment_method_key = f'payment_method_{i}'
+            payment_method_value = request.form.get(payment_method_key)
+            payment_methods.append(payment_method_value)
+        print("Submitted Payment Methods:")
+        for payment_method in payment_methods:
+            print(payment_method)
+        
         return "Data saved successfully!", 200
         
-    return render_template("new_business.html", title="Business Startup", business_form=business_form, artist_form=artist_form, schedules_form=schedules_form, packages_form=packages_form)
+    return render_template("new_business.html", title="Business Startup", business_form=business_form, artist_form=artist_form)

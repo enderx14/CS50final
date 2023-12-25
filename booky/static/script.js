@@ -1,5 +1,5 @@
+// Handle artists input
 document.addEventListener("DOMContentLoaded", function () {
-  const businessForm = document.getElementById("businessForm");
   const artistEntries = document.getElementById("artistEntries");
   const addArtistBtn = document.getElementById("addArtistBtn");
   const removeArtistBtn = document.getElementById("removeArtistBtn");
@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Handle schedules input
 document.addEventListener("DOMContentLoaded", function () {
-  const businessForm = document.getElementById("businessForm");
   const scheduleEntries = document.getElementById("scheduleEntries");
   const addScheduleBtn = document.getElementById("addScheduleBtn");
   const removeScheduleBtn = document.getElementById("removeScheduleBtn");
@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Handle packages input
 document.addEventListener("DOMContentLoaded", function () {
   const packageEntries = document.getElementById("packageEntries");
   const addPackageBtn = document.getElementById("addPackageBtn");
@@ -107,6 +108,76 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Handle Event Type input
+document.addEventListener("DOMContentLoaded", function () {
+  const eventTypeEntries = document.getElementById("eventTypeEntries");
+  const addEventTypeBtn = document.getElementById("addEventTypeBtn");
+  const removeEventTypeBtn = document.getElementById("removeEventTypeBtn");
+
+  let eventTypeCount = 0;
+  function updateEventTypeCount() {
+    const eventTypeCountField = document.getElementById("eventTypeCount");
+    eventTypeCountField.value = eventTypeCount;
+  }
+
+  addEventTypeBtn.addEventListener("click", function () {
+    eventTypeCount++;
+    updateEventTypeCount();
+    const newInput = document.createElement("input");
+    newInput.setAttribute("name", `event_type_${eventTypeCount}`);
+    newInput.setAttribute("type", "text");
+    newInput.setAttribute("placeholder", "Enter Event Type name");
+    newInput.setAttribute("class", "form-control form-control-sm mb-2 mt-3");
+    eventTypeEntries.appendChild(newInput);
+  });
+
+  removeEventTypeBtn.addEventListener("click", function () {
+    if (eventTypeCount > 0) {
+      const lastInput = eventTypeEntries.lastElementChild;
+      eventTypeEntries.removeChild(lastInput);
+      eventTypeCount--;
+      updateEventTypeCount();
+    }
+  });
+});
+
+// Handle Payment Methods input
+document.addEventListener("DOMContentLoaded", function () {
+  const paymentMethodEntries = document.getElementById("paymentMethodEntries");
+  const addPaymentMethodBtn = document.getElementById("addPaymentMethodBtn");
+  const removePaymentMethodBtn = document.getElementById(
+    "removePaymentMethodBtn"
+  );
+
+  let paymentMethodCount = 0;
+  function updatePaymentMethodCount() {
+    const paymentMethodCountField =
+      document.getElementById("paymentMethodCount");
+    paymentMethodCountField.value = paymentMethodCount;
+  }
+
+  addPaymentMethodBtn.addEventListener("click", function () {
+    paymentMethodCount++;
+    updatePaymentMethodCount();
+    const newInput = document.createElement("input");
+    newInput.setAttribute("name", `payment_method_${paymentMethodCount}`);
+    newInput.setAttribute("type", "text");
+    newInput.setAttribute("placeholder", "Enter Payment Method name");
+    newInput.setAttribute("class", "form-control form-control-sm mb-2 mt-3");
+    paymentMethodEntries.appendChild(newInput);
+  });
+
+  removePaymentMethodBtn.addEventListener("click", function () {
+    if (paymentMethodCount > 0) {
+      const lastInput = paymentMethodEntries.lastElementChild;
+      paymentMethodEntries.removeChild(lastInput);
+      paymentMethodCount--;
+      updatePaymentMethodCount();
+    }
+  });
+});
+
+// Function to display Multi-Step form and handle its input
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("multiStepForm");
   const fieldsets = form.querySelectorAll("fieldset");

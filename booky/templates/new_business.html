@@ -5,7 +5,7 @@
       <h2 class="article-title">
         {{ current_user.username}}'s New Business Setup
       </h2>
-      <p class="article-content">
+      <p class="lead">
         Please enter all your business details needed to setup the BOOKY
         application for you
       </p>
@@ -13,18 +13,29 @@
   </article>
   <div class="content-section">
     <form id="multiStepForm" method="POST" action="">
-      <fieldset class="form-group active-step" id="step1">
+      <fieldset class="form-group active-step" id="business_name_step">
         <legend class="border-bottom mb-4">Business Setup</legend>
+        <p class="lead">Enter your business name</p>
         <div class="form-group mb-5 w-50">
           {{ business_form.business_name.label(class="form-control-label") }} {{
           business_form.business_name(class="form-control form-control-lg") }}
         </div>
         <div class="form-group w-50">
-          <button type="button" class="save-btn">Save</button>
+          <button type="button" class="save-btn btn btn-primary btn-lg">
+            Save
+          </button>
         </div>
       </fieldset>
-      <fieldset class="form-group active-step" id="step2">
+      <fieldset class="form-group active-step" id="artists_step">
         <legend class="border-bottom mb-4">Artists Setup</legend>
+        <p class="lead">
+          First Enter your <mark>name</mark> and <mark>phone</mark> as the main
+          artist
+        </p>
+        <p class="lead">
+          Then you can add as many artists as you want by clicking on
+          <mark>Add Another Artist</mark>
+        </p>
         <div class="form-group mb-3 w-50">
           {{ artist_form.artist_name.label(class="form-control-label") }} {{
           artist_form.artist_name(class="form-control form-control-lg") }}
@@ -48,11 +59,13 @@
           </button>
         </div>
         <div class="form-group w-50">
-          <button type="button" class="save-btn">Save</button>
+          <button type="button" class="save-btn btn btn-primary btn-lg">
+            Save
+          </button>
         </div>
       </fieldset>
 
-      <fieldset class="form-group active-step" id="step3">
+      <fieldset class="form-group active-step" id="schedules_step">
         <legend class="border-bottom mb-4 mt-5">Schedules Setup</legend>
         <div class="form-group mb-5">
           <div id="scheduleEntries">
@@ -75,16 +88,18 @@
           </button>
         </div>
         <div class="form-group w-50">
-          <button type="button" class="save-btn">Save</button>
+          <button type="button" class="save-btn btn btn-primary btn-lg">
+            Save
+          </button>
         </div>
       </fieldset>
 
-      <fieldset class="form-group active-step" id="step4">
+      <fieldset class="form-group active-step" id="packages_step">
         <legend class="border-bottom mb-4 mt-5">Packages Setup</legend>
         <div class="form-group mb-5">
           <div id="packageEntries">
             <input type="hidden" id="packageCount" name="packageCount" />
-            <!-- Existing schedule entries go here (if any) -->
+            <!-- Existing  entries go here (if any) -->
           </div>
           <button id="addPackageBtn" type="button" class="btn btn-outline-info">
             Add Package
@@ -98,13 +113,77 @@
           </button>
         </div>
         <div class="form-group w-50">
-          <button type="button" class="save-btn">Save</button>
+          <button type="button" class="save-btn btn btn-primary btn-lg">
+            Save
+          </button>
+        </div>
+      </fieldset>
+      <fieldset class="form-group active-step" id="event_types_step">
+        <legend class="border-bottom mb-4 mt-5">Event Types Setup</legend>
+        <div class="form-group mb-5">
+          <div id="eventTypeEntries">
+            <input type="hidden" id="eventTypeCount" name="eventTypeCount" />
+            <!-- Existing entries go here (if any) -->
+          </div>
+          <button
+            id="addEventTypeBtn"
+            type="button"
+            class="btn btn-outline-info"
+          >
+            Add Event Type
+          </button>
+          <button
+            id="removeEventTypeBtn"
+            type="button"
+            class="btn btn-outline-info"
+          >
+            Remove Event Type
+          </button>
+        </div>
+        <div class="form-group w-50">
+          <button type="button" class="save-btn btn btn-primary btn-lg">
+            Save
+          </button>
+        </div>
+      </fieldset>
+      <fieldset class="form-group active-step" id="payment_method_step">
+        <legend class="border-bottom mb-4 mt-5">Payment Methods Setup</legend>
+        <div class="form-group mb-5">
+          <div id="paymentMethodEntries">
+            <input
+              type="hidden"
+              id="paymentMethodCount"
+              name="paymentMethodCount"
+            />
+            <!-- Existing entries go here (if any) -->
+          </div>
+          <button
+            id="addPaymentMethodBtn"
+            type="button"
+            class="btn btn-outline-info"
+          >
+            Add Payment Method
+          </button>
+          <button
+            id="removePaymentMethodBtn"
+            type="button"
+            class="btn btn-outline-info"
+          >
+            Remove Payment Method
+          </button>
+        </div>
+        <div class="form-group w-50">
+          <button type="button" class="save-btn btn btn-primary btn-lg">
+            Save
+          </button>
         </div>
       </fieldset>
     </form>
-    <div class="buttons">
-      <button id="prevBtn" type="button">Previous</button>
-      <button id="nextBtn" type="button">Next</button>
+    <div class="buttons form-group mt-lg-5">
+      <button id="prevBtn" type="button" class="btn btn-secondary">
+        Previous
+      </button>
+      <button id="nextBtn" type="button" class="btn btn-secondary">Next</button>
     </div>
   </div>
 </div>
