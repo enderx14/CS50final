@@ -191,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const forms = formsdiv.querySelectorAll("form");
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
+  const finishBtn = document.getElementById("finishBtn");
   const saveBtns = document.querySelectorAll(".save-btn");
   let currentStep = 0;
 
@@ -206,12 +207,38 @@ document.addEventListener("DOMContentLoaded", function () {
       currentStep++;
       showStep(currentStep);
     }
+    if (currentStep == forms.length - 1) {
+      finishBtn.classList.remove("hide-button");
+      nextBtn.classList.add("hide-button");
+    }
   }
 
   function handlePrev() {
     if (currentStep > 0) {
       currentStep--;
       showStep(currentStep);
+    }
+  }
+
+  function handleFinish() {
+    if (currentStep == forms.length - 1) {
+      fetch("/new_business", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ done: true }), // Send a JSON payload to Flask
+      })
+        .then((response) => {
+          // Handle the response if needed
+          if (response.ok) {
+            console.log("Signal sent to Flask");
+          }
+        })
+        .catch((error) => {
+          console.error("Error sending signal to Flask:", error);
+        });
+      window.location.replace("/home");
     }
   }
 
@@ -228,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((response) => {
           if (response.ok) {
             console.log("Data from the active step saved successfully!");
-            handleNext;
+            handleNext();
           } else {
             console.error("Failed to save data from the active step.");
           }
@@ -243,6 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   nextBtn.addEventListener("click", handleNext);
   prevBtn.addEventListener("click", handlePrev);
+  finishBtn.addEventListener("click", handleFinish);
 
   saveBtns.forEach((btn) => {
     btn.addEventListener("click", handleSave);

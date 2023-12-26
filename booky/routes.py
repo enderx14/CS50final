@@ -106,28 +106,38 @@ def account():
 
 
 
-@app.route("/new_business", methods=['GET', 'POST'])
+@app.route("/new_business", methods=["GET", "POST"])
 @login_required
 def new_business():
     business_form = BusinessForm()
     artist_form = ArtistForm()
-    # form = request.form
-    # schedules_form = ScheduleForm()
-    # packages_form = PackageForm()
-    # if current_user.is_authenticated and current_user.first_login:
-        
-    return render_template("new_business.html", title="Business Startup", business_form=business_form, artist_form=artist_form)
+    if request.method == "POST":
+        data = request.json
+        if data and data.get("done"):
+            current_user.first_login = 0
+            db.session.add(VenueType(venue_type="INSIDE", user_id=current_user.user_id))
+            db.session.add(VenueType(venue_type="OUTSIDE", user_id=current_user.user_id))
+            db.session.add(BookingStatus(booking_status="Active", user_id=current_user.user_id))
+            db.session.add(BookingStatus(booking_status="Cancelled", user_id=current_user.user_id))
+            db.session.add(BookingStatus(booking_status="Delayed", user_id=current_user.user_id))
+            db.session.commit()
+            return "Signal received by Flask", 200
+    elif request.method == "GET" and current_user.first_login:
+        return render_template("new_business.html", title="Business Startup", business_form=business_form, artist_form=artist_form)
+    else:
+        return redirect(url_for("home"))
 
 
-@app.route("/businessname", methods=['POST'])
+@app.route("/businessname", methods=["GET", "POST"])
 @login_required
 def business_name():
     business_form = BusinessForm()
-    if request.method == 'POST' and current_user.first_login:
-        print(business_form.business_name.data)
-        current_user.business_name = business_form.business_name.data
+    business_form.business_name.data = current_user.business_name
+    if request.method == 'POST':
+        current_user.business_name = request.form.get('business_name')
         db.session.commit()
         return "Data saved successfully!", 200
+    return render_template("businessname.html", business_form=business_form)
 
 
 @app.route("/newartist", methods=['POST'])
@@ -215,3 +225,7 @@ def new_payment_method():
         return "Data saved successfully!", 200
 
 
+@app.route("/business")
+@login_required
+def business():
+    return render_template("business.html")

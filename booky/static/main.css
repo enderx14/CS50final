@@ -84,7 +84,8 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-form.form-group {
+form.form-group,
+.hide-button {
   display: none; /* Hide all fieldsets by default */
 }
 
