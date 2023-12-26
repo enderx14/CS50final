@@ -111,81 +111,107 @@ def account():
 def new_business():
     business_form = BusinessForm()
     artist_form = ArtistForm()
+    # form = request.form
     # schedules_form = ScheduleForm()
     # packages_form = PackageForm()
     # if current_user.is_authenticated and current_user.first_login:
+        
+    return render_template("new_business.html", title="Business Startup", business_form=business_form, artist_form=artist_form)
+
+
+@app.route("/businessname", methods=['POST'])
+@login_required
+def business_name():
+    business_form = BusinessForm()
     if request.method == 'POST' and current_user.first_login:
-        artists = [{"name": artist_form.artist_name.data, "number": artist_form.artist_number.data}]
+        print(business_form.business_name.data)
+        current_user.business_name = business_form.business_name.data
+        db.session.commit()
+        return "Data saved successfully!", 200
+
+
+@app.route("/newartist", methods=['POST'])
+@login_required
+def new_artist():
+    artist_form = ArtistForm()
+    if request.method == 'POST' and current_user.first_login:
+        artist = Artist(artist_name=artist_form.artist_name.data, artist_number=artist_form.artist_number.data, user_id=current_user.user_id)
+        db.session.add(artist)
+        db.session.commit()
         if request.form.get('artistCount', 0) != '':
             artist_count = 1 + int(request.form.get('artistCount', 0))
         else:
             artist_count = 1
         if artist_count > 1:
             for i in range(1, artist_count):
-                artist_key1 = f'artist_name_{i}'
-                artist_value1 = request.form.get(artist_key1)
-                artist_key2 = f'artist_number_{i}'
-                artist_value2 = request.form.get(artist_key2)
-                artists.append({artist_key1: artist_value1, artist_key2: artist_value2})
-        print("Submitted Artists:")
-        for artist in artists:
-            print(artist)
-        
-        schedules = []
+                artist = Artist(artist_name=request.form.get(f'artist_name_{i}'),
+                                artist_number=request.form.get(f'artist_number_{i}'),
+                                user_id=current_user.user_id)
+                db.session.add(artist)
+                db.session.commit()
+        return "Data saved successfully!", 200
+
+@app.route("/newschedule", methods=['POST'])
+@login_required
+def new_schedule():
+    if request.method == 'POST' and current_user.first_login:
         if request.form.get('scheduleCount') != '':
             schedule_count = int(request.form.get('scheduleCount', 0))
         else:
             schedule_count = 0
         for i in range(1, schedule_count + 1):
-            schedule_key = f'schedule_{i}'
-            schedule_value = request.form.get(schedule_key)
-            schedules.append(schedule_value)
-        print("Submitted Schedules:")
-        for schedule in schedules:
-            print(schedule)
-        
-        packages = []
+            schedule = Schedule(schedule=request.form.get(f'schedule_{i}'), user_id=current_user.user_id)
+            db.session.add(schedule)
+            db.session.commit()
+        return "Data saved successfully!", 200
+
+
+@app.route("/newpackage", methods=['POST'])
+@login_required
+def new_package():
+    if request.method == 'POST' and current_user.first_login:
         if request.form.get('packageCount') != '':
             package_count = int(request.form.get('packageCount', 0))
-            print(package_count)
         else:
             package_count = 0
         for i in range(1, package_count + 1):
-            package_key = f'package_{i}'
-            package_value = request.form.get(package_key)
-            packages.append(package_value)
-        print("Submitted Packages:")
-        for package in packages:
-            print(package)
+            package_type = PackageType(package_type=request.form.get(f'package_{i}'),
+                                  package_type_detail=request.form.get(f'package_detail_{i}'), user_id=current_user.user_id)
+            db.session.add(package_type)
+            db.session.commit()
+        return "Data saved successfully!", 200
+        
 
-        event_types = []
+@app.route("/neweventtype", methods=['POST'])
+@login_required
+def new_event_type():
+    if request.method == 'POST' and current_user.first_login:
         if request.form.get('eventTypeCount') != '':
             event_type_count = int(request.form.get('eventTypeCount', 0))
-            print(event_type_count)
         else:
             event_type_count = 0
         for i in range(1, event_type_count + 1):
-            event_type_key = f'event_type_{i}'
-            event_type_value = request.form.get(event_type_key)
-            event_types.append(event_type_value)
-        print("Submitted Event Types:")
-        for event_type in event_types:
-            print(event_type)
+            event_type = EventType(event_type=request.form.get(f'event_type_{i}'),
+                                   user_id=current_user.user_id)
+            db.session.add(event_type)
+            db.session.commit()
+        return "Data saved successfully!", 200
 
-        payment_methods = []
+
+@app.route("/newpaymentmethod", methods=['POST'])
+@login_required
+def new_payment_method():
+    if request.method == 'POST' and current_user.first_login:
         if request.form.get('paymentMethodCount') != '':
             payment_method_count = int(request.form.get('paymentMethodCount', 0))
             print(payment_method_count)
         else:
             payment_method_count = 0
         for i in range(1, payment_method_count + 1):
-            payment_method_key = f'payment_method_{i}'
-            payment_method_value = request.form.get(payment_method_key)
-            payment_methods.append(payment_method_value)
-        print("Submitted Payment Methods:")
-        for payment_method in payment_methods:
-            print(payment_method)
-        
+            payment_method = PaymentMethod(payment_method=request.form.get(f'payment_method_{i}'),
+                                           user_id=current_user.user_id)
+            db.session.add(payment_method)
+            db.session.commit()
         return "Data saved successfully!", 200
-        
-    return render_template("new_business.html", title="Business Startup", business_form=business_form, artist_form=artist_form)
+
+

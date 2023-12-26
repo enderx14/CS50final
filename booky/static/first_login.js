@@ -90,18 +90,26 @@ document.addEventListener("DOMContentLoaded", function () {
   addPackageBtn.addEventListener("click", function () {
     packageCount++;
     updatePackageCount();
-    const newInput = document.createElement("input");
-    newInput.setAttribute("name", `package_${packageCount}`);
-    newInput.setAttribute("type", "text");
-    newInput.setAttribute("placeholder", "Enter package name");
-    newInput.setAttribute("class", "form-control form-control-sm mb-2 mt-3");
-    packageEntries.appendChild(newInput);
+    const newInput1 = document.createElement("input");
+    newInput1.setAttribute("name", `package_${packageCount}`);
+    newInput1.setAttribute("type", "text");
+    newInput1.setAttribute("placeholder", "Enter package name");
+    newInput1.setAttribute("class", "form-control form-control-sm mb-2 mt-3");
+    packageEntries.appendChild(newInput1);
+    const newInput2 = document.createElement("input");
+    newInput2.setAttribute("name", `package_detail_${packageCount}`);
+    newInput2.setAttribute("type", "text");
+    newInput2.setAttribute("placeholder", "Enter package details");
+    newInput2.setAttribute("class", "form-control form-control-sm mb-2 mt-3");
+    packageEntries.appendChild(newInput2);
   });
 
   removePackageBtn.addEventListener("click", function () {
     if (packageCount > 0) {
-      const lastInput = packageEntries.lastElementChild;
-      packageEntries.removeChild(lastInput);
+      const lastInput1 = packageEntries.lastElementChild;
+      packageEntries.removeChild(lastInput1);
+      const lastInput2 = packageEntries.lastElementChild;
+      packageEntries.removeChild(lastInput2);
       packageCount--;
       updatePackageCount();
     }
@@ -179,22 +187,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Function to display Multi-Step form and handle its input
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("multiStepForm");
-  const fieldsets = form.querySelectorAll("fieldset");
+  const formsdiv = document.getElementById("multi_forms");
+  const forms = formsdiv.querySelectorAll("form");
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const saveBtns = document.querySelectorAll(".save-btn");
   let currentStep = 0;
 
   function showStep(step) {
-    for (let i = 0; i < fieldsets.length; i++) {
-      fieldsets[i].classList.remove("active-step");
+    for (let i = 0; i < forms.length; i++) {
+      forms[i].classList.remove("active-step");
     }
-    fieldsets[step].classList.add("active-step");
+    forms[step].classList.add("active-step");
   }
 
   function handleNext() {
-    if (currentStep < fieldsets.length - 1) {
+    if (currentStep < forms.length - 1) {
       currentStep++;
       showStep(currentStep);
     }
@@ -209,21 +217,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleSave() {
     // Perform AJAX request to save form data
-    const formData = new FormData(form);
-    fetch("/new_business", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Data saved successfully!");
-        } else {
-          console.error("Failed to save data.");
-        }
+    const activeStep = document.querySelector(".active-step");
+    const url = `/${activeStep.id}`;
+    if (activeStep) {
+      const formData = new FormData(activeStep);
+      fetch(url, {
+        method: "POST",
+        body: formData,
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            console.log("Data from the active step saved successfully!");
+            handleNext;
+          } else {
+            console.error("Failed to save data from the active step.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      console.error("No active step form found.");
+    }
   }
 
   nextBtn.addEventListener("click", handleNext);

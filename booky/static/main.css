@@ -84,10 +84,10 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-fieldset.form-group {
+form.form-group {
   display: none; /* Hide all fieldsets by default */
 }
 
-fieldset.form-group.active-step {
+form.form-group.active-step {
   display: block; /* Display only the active step */
 }
