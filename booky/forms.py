@@ -71,9 +71,15 @@ class BusinessForm(FlaskForm):
     submit = SubmitField('Add Business')
 
 
-class ArtistForm(FlaskForm):
+class ArtistMainForm(FlaskForm):
     artist_name = StringField('Main Artist Name', validators=[InputRequired()])
     artist_number = StringField('Main Artist Number', validators=[InputRequired()])
+    submit = SubmitField('Save Artists')
+
+class ArtistForm(FlaskForm):
+    artist_id = StringField('Artist ID]')
+    artist_name = StringField('Artist Name', validators=[InputRequired()])
+    artist_number = StringField('Artist Number', validators=[InputRequired()])
     submit = SubmitField('Save Artists')
 
 

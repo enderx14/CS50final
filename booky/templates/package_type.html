@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="content-section">
+  <form class="form-group active-step" method="POST" action="">
+    <legend class="border-bottom mb-4">New Package Type</legend>
+
+    <div class="form-group mb-5 w-50">
+      {{ form.package_type.label(class="form-control-label") }} {{
+      form.package_type(class="form-control form-control-lg") }} {{
+      form.package_type_detail.label(class="form-control-label") }} {{
+      form.package_type_detail(class="form-control form-control-lg") }}
+    </div>
+
+    <div class="form-group mb-5">
+      <div id="packageEntries">
+        <input type="hidden" id="packageCount" name="packageCount" />
+        <!-- Existing  entries go here (if any) -->
+      </div>
+      <button id="addPackageBtn" type="button" class="btn btn-outline-info">
+        Add Package
+      </button>
+      <button id="removePackageBtn" type="button" class="btn btn-outline-info">
+        Remove Package
+      </button>
+    </div>
+    <div class="form-group text-end">
+      <div class="form-group">
+        {{ form.submit(class="btn btn-primary btn-lg", formnovalidate=true) }}
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="static/first_login.js"></script>
+{% endblock content %}

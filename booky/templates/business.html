@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<article class="media content-section">
+<article class="media content-section" id="business_name">
   <div class="media-body">
     <div class="article-metadata">
       <div class="form-group mb-5 w-50">
@@ -10,54 +10,84 @@
         <a
           class="btn btn-secondary btn-sm mt-1 mb-1"
           href="{{ url_for('business_name') }}"
-          >Update</a
+          >Edit</a
         >
-        <button
-          type="button"
-          class="btn btn-danger btn-sm m-1"
-          data-toggle="modal"
-          data-target="#deleteModal"
-        >
-          Delete
-        </button>
       </div>
     </div>
   </div>
 </article>
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="deleteModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="deleteModalLabel"
-  aria-hidden="true"
->
-  <!-- <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
+
+<article class="media content-section" id="artists">
+  <div class="media-body">
+    <div class="article-metadata">
+      <div class="form-group mb-5 w-50">
+        <h2 class="mb-4">Artists:</h2>
+        {% for artist in current_user.artists %}
+        <div class="media content-section">
+          <p>{{ artist.artist_name }} - {{ artist.artist_number }}</p>
+          <div class="text-end">
+            <a
+              href="{{ url_for('update_artist', artist_id=artist.artist_id) }}"
+              class="btn btn-secondary btn-sm mt-1 mb-1"
+              >Edit
+            </a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-id="{{ artist.artist_id }}">Delete</button>
+          </div>
+        </div>
+
+        {% endfor %}
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
-        <form
-          action=""
-          method="POST"
-        >
-          <input class="btn btn-danger" type="submit" value="Delete" />
-        </form>
+      <div class="text-center">
+        <a class="btn btn-primary btn-lg" href="{{ url_for("new_artist") }}">Add New Artist</a>
       </div>
     </div>
-  </div> -->
+  </div>
+</article>
+
+<article class="media content-section" id="package_types">
+<div class="media-body">
+    <div class="article-metadata">
+      <div class="form-group mb-5 w-50">
+        <h2 class="mb-4">Package Types:</h2>
+        {% for package_type in current_user.package_types %}
+        <div class="media content-section">
+          <h4 class="mb-3">{{ package_type.package_type }}</h4>
+          <p>{{ package_type.package_type_detail }}</p>
+          <div class="text-end">
+            <a
+              href="{{ url_for('update_package_type', package_type_id=package_type.package_type_id) }}"
+              class="btn btn-secondary btn-sm mt-1 mb-1"
+              >Edit
+            </a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-title="Package Type" data-bs-id="{{ package_type.package_type_id }}">Delete</button>
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+      <div class="text-center">
+        <a class="btn btn-primary btn-lg" href="{{ url_for("new_package") }}">Add New Package Type</a>
+      </div>
+    </div>
 </div>
+</article>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete?</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <form>
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+    <script src="static/modal2.js"></script>
 {% endblock content %}

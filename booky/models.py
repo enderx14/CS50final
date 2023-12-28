@@ -100,7 +100,7 @@ class BookingStatus(db.Model):
     __tablename__ = "bookingstatus"
     booking_status_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-    booking_status = db.Column(db.String(30), unique=True, default='Active')
+    booking_status = db.Column(db.String(30), default='Active')
 
     # Relationship to User model
     user = db.relationship('User', backref='booking_status', lazy=True)
@@ -113,7 +113,7 @@ class PackageType(db.Model):
     __tablename__ = "packagetype"
     package_type_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-    package_type = db.Column(db.String(90), unique=True, default='Makeup Only')
+    package_type = db.Column(db.String(90))
     package_type_detail = db.Column(db.String(200))
 
     # Relationship to User model
@@ -127,8 +127,8 @@ class Artist(db.Model):
     __tablename__ = "artist"
     artist_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-    artist_name = db.Column(db.String(20), unique=True)
-    artist_number = db.Column(db.String(20), unique=True)
+    artist_name = db.Column(db.String(20))
+    artist_number = db.Column(db.String(20))
 
     # Relationship to User model
     user = db.relationship('User', backref='artists', lazy=True)
@@ -141,7 +141,7 @@ class EventType(db.Model):
     __tablename__ = "eventtype"
     event_type_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-    event_type = db.Column(db.String(30), unique=True, default='Wedding')
+    event_type = db.Column(db.String(30), default='Wedding')
 
     # Relationship to User model
     user = db.relationship('User', backref='event_types', lazy=True)
@@ -154,7 +154,7 @@ class Venue(db.Model):
     __tablename__ = "venue"
     venue_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-    venue_name = db.Column(db.String(60), unique=True, default='SK')
+    venue_name = db.Column(db.String(60))
     venue_location = db.Column(db.String(120))
     venue_detail = db.Column(db.String(120))
 
@@ -169,7 +169,7 @@ class VenueType(db.Model):
     __tablename__ = "venuetype"
     venue_type_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-    venue_type = db.Column(db.String(20), unique=True, default='INSIDE')
+    venue_type = db.Column(db.String(20))
 
     # Relationship to User model
     user = db.relationship('User', backref='venue_types', lazy=True)
@@ -182,7 +182,7 @@ class PaymentMethod(db.Model):
     __tablename__ = 'paymentmethod'
     payment_method_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-    payment_method = db.Column(db.String(120), unique=True, default='Mobile Wallet')
+    payment_method = db.Column(db.String(120))
 
     user = db.relationship('User', backref='payment_methods', lazy=True)
 
@@ -194,7 +194,7 @@ class Schedule(db.Model):
     __tablename__ = "schedule"
     schedule_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-    schedule = db.Column(db.String(20), unique=True, nullable=False)
+    schedule = db.Column(db.String(20), nullable=False)
 
     user = db.relationship('User', backref='schedules', lazy=True)
 

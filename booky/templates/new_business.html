@@ -35,12 +35,13 @@
         <mark>Add Another Artist</mark>
       </p>
       <div class="form-group mb-3 w-50">
-        {{ artist_form.artist_name.label(class="form-control-label") }} {{
-        artist_form.artist_name(class="form-control form-control-lg") }}
+        {{ artist_main_form.artist_name.label(class="form-control-label") }} {{
+        artist_main_form.artist_name(class="form-control form-control-lg") }}
       </div>
       <div class="form-group mb-5 w-50">
-        {{ artist_form.artist_number.label(class="form-control-label") }} {{
-        artist_form.artist_number(class="form-control form-control-lg") }}
+        {{ artist_main_form.artist_number.label(class="form-control-label") }}
+        {{ artist_main_form.artist_number(class="form-control form-control-lg")
+        }}
 
         <div id="artistEntries">
           <input type="hidden" id="artistCount" name="artistCount" />
