@@ -9,7 +9,7 @@
       <div>
         <a
           class="btn btn-secondary btn-sm mt-1 mb-1"
-          href="{{ url_for('business_name') }}"
+          href="{{ url_for('business_add.business_name') }}"
           >Edit</a
         >
       </div>
@@ -27,7 +27,7 @@
           <p>{{ artist.artist_name }} - {{ artist.artist_number }}</p>
           <div class="text-end">
             <a
-              href="{{ url_for('update_artist', artist_id=artist.artist_id) }}"
+              href="{{ url_for('business_edit.update_artist', artist_id=artist.artist_id) }}"
               class="btn btn-secondary btn-sm mt-1 mb-1"
               >Edit
             </a>
@@ -38,7 +38,7 @@
         {% endfor %}
       </div>
       <div class="text-center">
-        <a class="btn btn-primary btn-lg" href="{{ url_for("new_artist") }}">Add New Artist</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for("business_add.new_artist") }}">Add New Artist</a>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@
           <p>{{ package_type.package_type_detail }}</p>
           <div class="text-end">
             <a
-              href="{{ url_for('update_package_type', package_type_id=package_type.package_type_id) }}"
+              href="{{ url_for('business_edit.update_package_type', package_type_id=package_type.package_type_id) }}"
               class="btn btn-secondary btn-sm mt-1 mb-1"
               >Edit
             </a>
@@ -66,7 +66,7 @@
         {% endfor %}
       </div>
       <div class="text-center">
-        <a class="btn btn-primary btn-lg" href="{{ url_for("new_package") }}">Add New Package Type</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for("business_add.new_package") }}">Add New Package Type</a>
       </div>
     </div>
 </div>
